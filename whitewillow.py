@@ -18,8 +18,6 @@ api_key = st.sidebar.text_input("Enter your API key:", type="password")
 
 csv_file = st.sidebar.file_uploader("Upload a CSV file", type=["csv"])
 
-tablename = 'csv_file.name'
-
 prefix_text = st.sidebar.text_area(
     "Enter prefix to pass:",
     """Given an input question, first create a syntactically correct sqlite query to run, then look at the results of the query and return the answer.
