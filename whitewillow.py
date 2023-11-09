@@ -45,6 +45,7 @@ st.sidebar.write(f'You wrote {len(prefix_text)} characters.')
 
 # Load CSV into DataFrame and create SQLite database
 def load_data(csv_file, tablename):
+    tablename = csv_file.name()
     tablename = tablename.replace(" ", "_")
     df = pd.read_csv(csv_file)
     conn = sqlite3.connect('db2.db')
