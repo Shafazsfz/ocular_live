@@ -19,6 +19,7 @@ api_key = st.sidebar.text_input("Enter your API key:", type="password")
 csv_file = st.sidebar.file_uploader("Upload a CSV file", type=["csv"])
 
 tablename = 'csv_file.name'
+tablename = tablename.replace(" ", "_")
 
 prefix_text = st.sidebar.text_area(
     "Enter prefix to pass:",
@@ -47,7 +48,7 @@ st.sidebar.write(f'You wrote {len(prefix_text)} characters.')
 def load_data(csv_file):
     df = pd.read_csv(csv_file)
     conn = sqlite3.connect('db2.db')
-    df.to_sql('tablename', conn, if_exists='replace', index=False)
+    df.to_sql(tablename, conn, if_exists='replace', index=False)
     conn.commit()
     conn.close()
 
