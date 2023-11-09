@@ -18,6 +18,7 @@ api_key = st.sidebar.text_input("Enter your API key:", type="password")
 
 csv_file = st.sidebar.file_uploader("Upload a CSV file", type=["csv"])
 
+
 prefix_text = st.sidebar.text_area(
     "Enter prefix to pass:",
     """Given an input question, first create a syntactically correct sqlite query to run, then look at the results of the query and return the answer.
@@ -42,7 +43,7 @@ prefix_text = st.sidebar.text_area(
 st.sidebar.write(f'You wrote {len(prefix_text)} characters.')
 
 # Load CSV into DataFrame and create SQLite database
-def load_data(csv_file, tablename):
+def load_data(csv_file):
     df = pd.read_csv(csv_file)
     conn = sqlite3.connect('db2.db')
     df.to_sql('table', conn, if_exists='replace', index=False)
@@ -56,33 +57,33 @@ def initialize_llm_predictor():
 
     custom_table_info = {
     "fact_order_item": f"""CREATE TABLE "fact_order_item" (
-                        order_id INTEGER PRIMARY KEY,
-                        order_item_id,
-                        marketplace,
-                        order_date,
-                        quantity,
-                        price,
-                        discounts,
-                        shipping_pincode,
-                        state,
-                        city,
-                        sku_name,
-                        asin,
-                        amazon_parent_sku,
-                        fabric,
-                        product_name,
-                        collection,
-                        master_collection,
-                        product_type,
-                        weigh_slab,
-                        awb,
-                        shipping_status,
-                        simplified_status,
-                        fulfillment_channel,
-                        inner_consumption,
-                        outer_consumption,
-                        consumption_cost,
-                        cost
+                        order_id INTEGER PRIMARY KEY, 
+                        order_item_id REAL, 
+                        marketplace TEXT, 
+                        order_date DATE, 
+                        quantity INTEGER, 
+                        price REAL, 
+                        discounts REAL, 
+                        shipping_pincode INTEGER, 
+                        state TEXT, 
+                        city TEXT, 
+                        sku_name TEXT, 
+                        asin TEXT, 
+                        amazon_parent_sku TEXT, 
+                        fabric TEXT, 
+                        product_name TEXT, 
+                        collection TEXT, 
+                        master_collection TEXT, 
+                        product_type TEXT, 
+                        weigh_slab REAL, 
+                        awb REAL, 
+                        shipping_status TEXT, 
+                        simplified_status TEXT, 
+                        fulfillment_channel TEXT, 
+                        inner_consumption REAL, 
+                        outer_consumption REAL, 
+                        consumption_cost INTEGER, 
+                        cost INTEGER
                     )
 
     /*
@@ -112,25 +113,25 @@ def initialize_llm_predictor():
     */""",
 
     "fact_ads_sales_spend": f"""CREATE TABLE "fact_ads_sales_spend" (
-                        sku_name,
-                        date,
-                        asin,
-                        cost,
-                        attributed_sales,
-                        total_sales,
-                        total_orders,
-                        impressions,
-                        clicks,
-                        cpc,
-                        cpm,
-                        acos,
-                        roas,
-                        ctr,
-                        sessions,
-                        unitsOrdered,
-                        unitSessionPercentage,
-                        pageViews,
-                        pageViewsPercentage
+                        sku_name TEXT PRIMARY KEY, 
+                        date DATE, 
+                        asin TEXT, 
+                        cost REAL, 
+                        attributed_sales REAL, 
+                        total_sales REAL, 
+                        total_orders REAL, 
+                        impressions REAL, 
+                        clicks REAL, 
+                        cpc REAL, 
+                        cpm REAL, 
+                        acos REAL, 
+                        roas REAL, 
+                        ctr REAL, 
+                        sessions INTEGER, 
+                        "unitsOrdered" INTEGER, 
+                        "unitSessionPercentage" REAL, 
+                        "pageViews" INTEGER, 
+                        "pageViewsPercentage" REAL
                     )
 
     /* 
